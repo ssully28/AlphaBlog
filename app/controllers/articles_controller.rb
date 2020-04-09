@@ -1,4 +1,7 @@
 class ArticlesController < ApplicationController
+  
+  # Perform this action (set_article) before these actions:
+  before_action :set_article, only: [:show, :edit, :update, :destroy]
 
   def index
     @articles = Article.all
@@ -20,9 +23,6 @@ class ArticlesController < ApplicationController
     # or
     # render plain: params[:article]
     @article = Article.new(article_params)
-    
-    # Guessing this is how form_with works:
-    # @article = Article.new(params.require(:article).permit(:title, :description))
     
     if @article.save
       flash[:notice] = "Article was successfully created"
@@ -49,23 +49,15 @@ class ArticlesController < ApplicationController
   def show
     # '@' makes article an instance var...
     # thus making it available in the view
-    @article = Article.find(params[:id])
+    # we were doing the set article here - now moved to before_action!
   end
 
   def edit
-    @article = Article.find(params[:id])
   end
 
   def update
-    @article = Article.find(params[:id])
     
-    # Was:
-    # This method here uses a private function below
-    # to white list the parameters fields:
-    # if @article.update(article_params)
-    # Now:
-    # Using same white listing method that we listed earlier:
-    if @article.update(params.require(:article).permit(:title, :description))
+    if @article.update(article_params)
       flash[:notice] = "Article was successfully updated"
       redirect_to @article
     else
@@ -75,16 +67,19 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
-    @article = Article.find(params[:id])
     @article.destroy
     redirect_to articles_path
   end
 
   private
+  
     # Whitelist parameters:
     def article_params
       params.require(:article).permit(:title, :description)
     end
 
+    def set_article
+      @article = Article.find(params[:id])
+    end
 
 end
