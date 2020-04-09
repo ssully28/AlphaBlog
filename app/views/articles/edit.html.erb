@@ -9,6 +9,8 @@
   </ul>
 <% end %>
 <%# @article will come from the controller! %>
+<%# The form_with version: %>
+<%# form_with(model: @article, local:true) |f| %>
 <%= form_for @article do |f| %>
   <p>
     <%= f.label :title %><br/>

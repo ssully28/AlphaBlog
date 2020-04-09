@@ -9,6 +9,11 @@
   </ul>
 <% end %>
 <%# @article will come from the controller! %>
+
+
+<%# New way to do forms: 'form_with' %>
+<%# form_with scope: :article, url: articles_path, local: true do %>
+
 <%= form_for @article do |f| %>
   <p>
     <%= f.label :title %><br/>
