@@ -1,13 +1,6 @@
 <div class="container">
-  <% if @article.errors.any? %>
-    <h2>The following errors prevented the article from getting created:</h2>
-    <ul>
-      <% @article.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-    </ul>
-  <% end %>
   <div class="row justify-content-center shadow p-3 mb-5 bg-info rounded">
+    <%= render 'shared/errors' %>
     <div class="col-10">
       <%# @article will come from the controller! %>
       <%# The form_with version: %>
